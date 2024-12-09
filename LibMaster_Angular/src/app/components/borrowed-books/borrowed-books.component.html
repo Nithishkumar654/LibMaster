@@ -1,0 +1,59 @@
+<div class="flex flex-col items-center mt-5">
+    <h1>Manage Your Borrowed Books From Here..</h1>
+</div>
+
+
+<div class="flex justify-center items-center" [class.hidden]="!isLoading">
+    <mat-spinner></mat-spinner>
+</div>
+
+
+<div class="" *ngIf="dataSource.data.length == 0">
+    <h1 class="text-center">No Books Found</h1>
+</div>
+
+<div class="w-full md:w-3/4 m-auto" [class.hidden]="!dataSource.data || dataSource.data.length === 0">
+    <div class="overflow-auto">
+        <table mat-table [dataSource]="dataSource.data.length > 0 ? dataSource : []" matSort class="overflow-auto">
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                <td mat-cell *matCellDef="let borrowedBook"> {{ borrowedBook.book.title }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="author">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Author </th>
+                <td mat-cell *matCellDef="let borrowedBook"> {{ borrowedBook.book.author }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="borrowDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> BorrowDate </th>
+                <td mat-cell *matCellDef="let borrowedBook"> {{ borrowedBook.borrowDate | date }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dueDate">
+                <th mat-header-cell *matHeaderCellDef class="text-center" mat-sort-header> Due Date </th>
+                <td mat-cell *matCellDef="let borrowedBook"> {{ borrowedBook.dueDate | date }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef class="text-center" mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let borrowedBook"
+                    [ngClass]="{'font-bold': borrowedBook.status === 'Returned'}"> {{ borrowedBook.status }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="options">
+                <th mat-header-cell *matHeaderCellDef> Options </th>
+                <td mat-cell *matCellDef="let borrowedBook" class="">
+                    <button mat-flat-button class="!bg-green-500 m-2 !text-white"
+                        (click)="openDialog('500ms', '500ms', borrowedBook)">View
+                        Book</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <mat-paginator [length]="dataSource.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+</div>

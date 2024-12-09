@@ -1,0 +1,244 @@
+<div class="flex flex-col">
+    <div class="mt-5"></div>
+    <h1 class="text-center">Hello Name, the Super Librarian</h1>
+
+    <div class="w-3/4 self-center">
+        <h1 class="text-center">Recollecting your phenomenal responsibilities</h1>
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Organizing and Maintaining the Collection</mat-panel-title>
+                    <mat-panel-description></mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>Curating, cataloging, and classifying books, journals, digital resources, and other materials to
+                    ensure
+                    easy
+                    access.</p>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title> Assisting Library Users</mat-panel-title>
+                    <mat-panel-description></mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>Helping visitors locate materials and providing recommendations based on their needs.</p>
+                <p>Offering guidance on research techniques, reference materials, and technology usage.</p>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Ensuring Library Policies and Rules</mat-panel-title>
+                    <mat-panel-description></mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>Establishing and enforcing borrowing policies, membership guidelines, and overdue fee systems.</p>
+                <p>Creating a safe, welcoming, and orderly environment for all visitors.</p>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Preserving the Library's Vision</mat-panel-title>
+                    <mat-panel-description></mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>Preserving the Library's Vision.</p>
+                <p>Creating a safe, welcoming, and orderly environment for all visitors.</p>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+    <div class="w-3/4 self-center mt-5">
+        <h1 class="text-center">What would like to do..??</h1>
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Add a New Book to the Books Treasure</mat-panel-title>
+                    <mat-panel-description></mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="min-h-screen bg-white flex items-center justify-center">
+                    <div class="w-full max-w-2xl bg-white-100 shadow-xl rounded-lg p-8 m-2">
+                        <!-- Header -->
+                        <div class="mb-6">
+                            <h1 class="text-2xl font-bold text-gray-700">Add New Book</h1>
+                            <p class="text-sm text-gray-500">Fill in the details below to add a book to the library.</p>
+                        </div>
+
+
+                        <!-- Stepper -->
+                        <mat-stepper [linear]="true" #stepper>
+                            <mat-step [stepControl]="bookForm">
+                                <form [formGroup]="bookForm" class="space-y-6">
+                                    <ng-template matStepLabel>Book Details</ng-template>
+                                    <div class="mt-3">
+                                        <mat-form-field appearance="fill" class="w-full">
+                                            <mat-label>Book Title</mat-label>
+                                            <input matInput formControlName="title" placeholder="Enter book title"
+                                                required />
+                                        </mat-form-field>
+                                        <div *ngIf="bookForm.get('title')?.touched && bookForm.get('title')?.invalid"
+                                            class="text-red-500 text-sm">
+                                            <span *ngIf="bookForm.get('title')?.hasError('required')">Book title is
+                                                required.</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <mat-form-field appearance="fill" class="w-full">
+                                            <mat-label>Author</mat-label>
+                                            <input matInput formControlName="author" placeholder="Enter author name"
+                                                required />
+                                        </mat-form-field>
+                                        <div *ngIf="bookForm.get('author')?.touched && bookForm.get('author')?.invalid"
+                                            class="text-red-500 text-sm">
+                                            <span *ngIf="bookForm.get('author')?.hasError('required')">Author is
+                                                required.</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <mat-form-field appearance="fill" class="w-full">
+                                            <mat-label>Genre</mat-label>
+                                            <input matInput formControlName="genre" placeholder="Enter Genre"
+                                                required />
+                                        </mat-form-field>
+                                        <div *ngIf="bookForm.get('genre')?.touched && bookForm.get('genre')?.invalid"
+                                            class="text-red-500 text-sm">
+                                            <span *ngIf="bookForm.get('genre')?.hasError('required')">Genre is
+                                                required.</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <mat-form-field appearance="fill" class="w-full">
+                                            <mat-label>Category</mat-label>
+                                            <mat-select formControlName="categoryId" required>
+                                                <mat-option value="1">Fiction</mat-option>
+                                                <mat-option value="2">Non-Fiction</mat-option>
+                                                <mat-option value="3">Science</mat-option>
+                                                <mat-option value="4">History</mat-option>
+                                                <mat-option value="5">Technology</mat-option>
+                                                <mat-option value="6">Children</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <div *ngIf="bookForm.get('categoryId')?.touched && bookForm.get('categoryId')?.invalid"
+                                            class="text-red-500 text-sm">
+                                            <span *ngIf="bookForm.get('categoryId')?.hasError('required')">Category is
+                                                required.</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <mat-form-field appearance="fill" class="w-full">
+                                            <mat-label>ISBN</mat-label>
+                                            <input matInput formControlName="isbn" placeholder="Enter ISBN number" />
+                                        </mat-form-field>
+                                        <div *ngIf="bookForm.get('isbn')?.touched && bookForm.get('isbn')?.invalid"
+                                            class="text-red-500 text-sm">
+                                            <span *ngIf="bookForm.get('isbn')?.hasError('pattern')">Invalid ISBN
+                                                format.</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <mat-form-field appearance="fill" class="w-full">
+                                            <mat-label>Number of Copies</mat-label>
+                                            <input matInput formControlName="availableCopies" type="number" min="1"
+                                                placeholder="Enter number of copies" required />
+                                        </mat-form-field>
+                                        <div *ngIf="bookForm.get('availableCopies')?.touched && bookForm.get('availableCopies')?.invalid"
+                                            class="text-red-500 text-sm">
+                                            <span *ngIf="bookForm.get('availableCopies')?.hasError('required')">Number
+                                                of
+                                                AvailableCopies is
+                                                required.</span>
+                                            <span *ngIf="bookForm.get('availableCopies')?.hasError('min')">The number of
+                                                AvailableCopies should be
+                                                at least 1.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-end space-x-4">
+                                        <button type="reset"
+                                            class="px-6 py-2 text-sm font-medium text-white bg-gray-500 rounded-md ">
+                                            Clear
+                                        </button>
+
+                                        <button mat-flat-button matStepperNext color="primary"
+                                            class="m-auto !text-white">Next</button>
+                                    </div>
+                                </form>
+                            </mat-step>
+
+                            <mat-step [stepControl]="inventoryForm">
+                                <form [formGroup]="inventoryForm" class="space-y-6">
+                                    <ng-template matStepLabel>Inventory Details</ng-template>
+                                    <div class="mt-3">
+                                        <mat-form-field appearance="fill" class="w-full">
+                                            <mat-label>Quantity</mat-label>
+                                            <input matInput formControlName="quantity" type="number"
+                                                placeholder="Enter book title" required />
+                                        </mat-form-field>
+                                        <div *ngIf="inventoryForm.get('quantity')?.touched && inventoryForm.get('quantity')?.invalid"
+                                            class="text-red-500 text-sm">
+                                            <span *ngIf="inventoryForm.get('quantity')?.hasError('required')">Book title
+                                                is
+                                                required.</span>
+                                            <span *ngIf="inventoryForm.get('quantity')?.hasError('min')">Quantity should
+                                                be
+                                                at least 1.</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <mat-form-field appearance="fill" class="w-full">
+                                            <mat-label>Condition</mat-label>
+                                            <mat-select formControlName="condition" required>
+                                                <mat-option value="Good">Good</mat-option>
+                                                <mat-option value="Fair">Fair</mat-option>
+                                                <mat-option value="Damaged">Damaged</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <div *ngIf="inventoryForm.get('condition')?.touched && inventoryForm.get('condition')?.invalid"
+                                            class="text-red-500 text-sm">
+                                            <span *ngIf="inventoryForm.get('condition')?.hasError('required')">Condition
+                                                is
+                                                required.</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <mat-form-field appearance="fill" class="w-full">
+                                            <mat-label>Location</mat-label>
+                                            <input matInput formControlName="location" placeholder="Enter book location"
+                                                required />
+                                        </mat-form-field>
+                                        <div *ngIf="inventoryForm.get('location')?.touched && inventoryForm.get('location')?.invalid"
+                                            class="text-red-500 text-sm">
+                                            <span *ngIf="inventoryForm.get('location')?.hasError('required')">Location
+                                                is
+                                                required.</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex">
+                                        <button
+                                            class="px-6 py-2 m-auto text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700"
+                                            (click)="add()">
+                                            Add Book
+                                        </button>
+                                    </div>
+                                </form>
+                            </mat-step>
+                        </mat-stepper>
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Update an existing Book</mat-panel-title>
+                    <mat-panel-description></mat-panel-description>
+                </mat-expansion-panel-header>
+                <button mat-flat-button class="!bg-green-500 !text-white" (click)="update()">Update</button>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+    </div>
+
+
+</div>

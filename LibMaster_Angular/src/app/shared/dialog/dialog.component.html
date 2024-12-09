@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Book Details</h2>
+
+<mat-dialog-content *ngIf="!data">
+    <mat-spinner></mat-spinner>
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="data" class="flex flex-col space-y-8">
+    <div class="w-1/3">
+        <img [src]="getRandomImage()" alt="Random Book Image" class="w-full h-auto rounded-lg shadow-md" />
+    </div>
+    <div class="w-2/3">
+        <p><strong>Title:</strong> {{ bookForm.value.title }}</p>
+        <p><strong>Author:</strong> {{ bookForm.value.author }}</p>
+        <p><strong>Genre:</strong> {{ bookForm.value.genre }}</p>
+        <p><strong>ISBN:</strong> {{ bookForm.value.isbn }}</p>
+        <p><strong>Publication Date:</strong> {{ bookForm.value.publicationDate | date }}</p>
+        <p><strong>Available Copies:</strong> {{ bookForm.value.availableCopies }}</p>
+        <p><strong>Status:</strong> {{ bookForm.value.status }}</p>
+        <p><strong>Condition:</strong> {{ bookForm.value.inventory.condition }}</p>
+        <p><strong>Location:</strong> {{ bookForm.value.inventory.location }}</p>
+        <p><strong>Category:</strong> {{ bookForm.value.category.categoryName }}</p>
+        <p><strong>Description:</strong> {{ bookForm.value.category.description }}</p>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions *ngIf="librarian">
+    <mat-form-field class="w-full">
+        <mat-label>Add Copies</mat-label>
+        <input type="number" matInput [(ngModel)]="addCopies" />
+    </mat-form-field>
+</mat-dialog-actions>
+
+<mat-dialog-actions align="end">
+    <button mat-flat-button *ngIf="this.data.status == 'Available' && !librarian" class="!bg-green-500 !text-white"
+        (click)="borrow()">Order</button>
+    <button mat-flat-button *ngIf="this.data.status == 'Not Available' && !librarian" class="!bg-blue-500 !text-white"
+        (click)="reserve()">Reserve</button>
+
+    <button mat-flat-button *ngIf="librarian" class="!bg-green-500 !text-white" (click)="save()">Save</button>
+    <button mat-flat-button (click)="dialogRef.close()" class="!bg-red-500 !text-white">Close</button>
+</mat-dialog-actions>

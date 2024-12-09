@@ -1,0 +1,64 @@
+<section class="pt-16 relative">
+    <div class="h-[500px] relative">
+        <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66" alt="Library Interior"
+            class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="text-center text-white p-8">
+                <h1 class="!text-4xl md:text-6xl font-bold mb-6">
+                    Welcome to LibMaster: Explore, Learn, Borrow
+                </h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 px-4 bg-[#E3F2FD]">
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-lg shadow-md text-center">
+            <i class="icon-book h-12 w-12 mx-auto mb-4 text-[#2196F3]"></i>
+            <h3 class="text-xl font-semibold mb-4">Borrow Books</h3>
+            <p class="text-gray-600">
+                Access thousands of books from our extensive collection.
+            </p>
+        </div>
+        <div class="bg-white p-8 rounded-lg shadow-md text-center">
+            <i class="icon-calendar h-12 w-12 mx-auto mb-4 text-[#2196F3]"></i>
+            <h3 class="text-xl font-semibold mb-4">Reserve a Book</h3>
+            <p class="text-gray-600">
+                Reserve your favorite books in advance.
+            </p>
+        </div>
+        <div class="bg-white p-8 rounded-lg shadow-md text-center">
+            <i class="icon-user-circle h-12 w-12 mx-auto mb-4 text-[#2196F3]"></i>
+            <h3 class="text-xl font-semibold mb-4">Manage Membership</h3>
+            <p class="text-gray-600">
+                Update your profile and track your borrowings.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 px-4">
+    <div class="container mx-auto">
+        <h2 class="text-3xl font-bold mb-8">Popular Books</h2>
+        <div class="relative">
+            <button (click)="scrollCarousel('left')"
+                class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md">
+                <i class="icon-chevron-left h-6 w-6 text-[#2196F3]"></i>
+            </button>
+            <div #carousel class="flex overflow-x-auto scrollbar-hide space-x-6 px-4"
+                style="scroll-snap-type: x mandatory">
+                <div *ngFor="let book of books; let i = index" class="flex-none w-64 scroll-snap-align-start">
+                    <img [src]="'https://picsum.photos/300/400?random=' + (i + 1)" alt="Book"
+                        class="w-full h-80 object-cover rounded-lg shadow-md mb-4" />
+                    <h3 class="font-semibold">{{ book.title }}</h3>
+                    <p class="text-gray-600">{{ book.genre }}</p>
+                </div>
+            </div>
+            <button (click)="scrollCarousel('right')"
+                class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md">
+                <i class="icon-chevron-right h-6 w-6 text-[#2196F3]"></i>
+            </button>
+        </div>
+    </div>
+</section>

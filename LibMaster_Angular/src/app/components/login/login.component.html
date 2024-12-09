@@ -1,0 +1,60 @@
+<div class="min-h-screen flex items-center justify-evenly flex-wrap">
+    <img src="../../../assets/images/logo.jpg" alt="" class="w-1/2 md:w-1/4 h-1/2 self-center">
+
+    <mat-card class="w-full max-w-sm p-6 shadow-xl rounded-lg ">
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-blue-600">Welcome Back!</h2>
+            <p class="text-sm">Login to your account</p>
+        </div>
+
+        <!-- Login Form -->
+        <form [formGroup]="loginForm">
+            <!-- Email Input -->
+            <mat-form-field appearance="fill" class="w-full mb-4">
+                <mat-label class="">Email</mat-label>
+                <input matInput formControlName="email" class="" type="email" placeholder="Enter your email" required />
+                <mat-error *ngIf="loginForm.get('email')?.errors?.['required']">
+                    Email is required.
+                </mat-error>
+                <mat-error *ngIf="loginForm.get('email')?.errors?.['email']">
+                    Invalid email address.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="w-full mb-4">
+                <mat-label class="">Password</mat-label>
+                <input matInput formControlName="password" class="" type="password" placeholder="Enter your password"
+                    required />
+                <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                    Password is required.
+                </mat-error>
+            </mat-form-field>
+
+
+            <!-- Remember Me and Forgot Password -->
+            <div class="flex justify-between items-center mb-4">
+                <mat-checkbox class="">Remember me</mat-checkbox>
+                <a href="" routerLink="/forgot" class="text-sm text-blue-500 hover:underline">Forgot password?</a>
+            </div>
+
+            <!-- Login Button -->
+            <button mat-raised-button color="primary" class="w-full py-2 text-lg" (click)="login()">
+                Login
+            </button>
+
+            <!-- Divider -->
+            <div class="flex items-center mt-6 mb-4">
+                <hr class="flex-grow border-gray-300" />
+                <span class="mx-3 text-gray-500 text-sm">OR</span>
+                <hr class="flex-grow border-gray-300" />
+            </div>
+
+            <!-- Register Button -->
+            <button mat-flat-button color="accent" class="w-full py-2 text-lg" (click)="goToRegister()">
+                Create an Account
+            </button>
+        </form>
+    </mat-card>
+
+</div>

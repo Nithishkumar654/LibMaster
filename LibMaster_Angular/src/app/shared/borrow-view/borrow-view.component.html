@@ -1,0 +1,86 @@
+<h2 mat-dialog-title>Borrowed Book Details</h2>
+
+
+<mat-dialog-content>
+    <div>
+        <p><strong>Title:</strong> {{ bookForm!.value.book.title }}</p>
+        <p><strong>Author:</strong> {{ bookForm!.value.book.author }}</p>
+        <p><strong>Borrow Date:</strong> {{ bookForm!.value.borrowDate | date }}</p>
+        <p><strong>Due Date:</strong> {{ bookForm!.value.dueDate | date }}</p>
+        <p><strong>Return Date:</strong> {{ (bookForm!.value.returnDate | date) ?? 'Not Returned' }}</p>
+        <p><strong>Late Fee:</strong> {{ this.calculateLateFee()| currency: 'INR' }}</p>
+        <p><strong>Status:</strong> {{ bookForm!.value.status }}</p>
+    </div>
+
+    <form *ngIf="showForm" [formGroup]="paymentForm" (ngSubmit)="payFee()" class="space-y-5">
+
+        <!-- Card Holder Name -->
+        <mat-form-field class="w-full">
+            <mat-label>Card Holder Name</mat-label>
+            <input matInput formControlName="cardHolderName" placeholder="Enter your name" />
+            <mat-error *ngIf="paymentForm.get('cardHolderName')?.hasError('required')">Card holder
+                name is required</mat-error>
+            <mat-error *ngIf="paymentForm.get('cardHolderName')?.hasError('pattern')">Invalid name
+                format</mat-error>
+        </mat-form-field>
+
+        <!-- Card Number -->
+        <mat-form-field class="w-full">
+            <mat-label>Card Number</mat-label>
+            <input matInput formControlName="cardNumber" placeholder="1234-5678-9101-1121" />
+            <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('required')">Card number is
+                required</mat-error>
+            <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('pattern')">Invalid card
+                number format</mat-error>
+        </mat-form-field>
+
+        <div class="md:flex space-x-2 space-y-2">
+            <!-- Expiry Date (Month-Year Picker) -->
+            <mat-form-field class="w-full md:w-1/2">
+                <mat-label>Month and Year</mat-label>
+                <input matInput [matDatepicker]="dp" formControlName="expiryDate">
+                <mat-hint>Expiry Date: MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker #dp startView="multi-year" (monthSelected)="setMonthAndYear($event, dp)"
+                    panelClass="example-month-picker">
+                </mat-datepicker>
+
+                <mat-error *ngIf="paymentForm.get('expiryDate')?.hasError('expiryDateInvalid')">
+                    Expiry date must be in the future
+                </mat-error>
+                <mat-error *ngIf="paymentForm.get('expiryDate')?.hasError('required')">
+                    Expiry date is required
+                </mat-error>
+            </mat-form-field>
+
+            <!-- CVV -->
+            <mat-form-field class="w-full md:w-1/2">
+                <mat-label>CVV</mat-label>
+                <input matInput formControlName="cvv" type="password" placeholder="123" />
+                <mat-error *ngIf="paymentForm.get('cvv')?.hasError('required')">CVV is
+                    required</mat-error>
+                <mat-error *ngIf="paymentForm.get('cvv')?.hasError('pattern')">Invalid
+                    CVV</mat-error>
+            </mat-form-field>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-center">
+            <button mat-raised-button color="primary" class="!py-2 !px-5" [disabled]="!paymentForm.valid">Pay
+                Now</button>
+        </div>
+    </form>
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+
+    <button mat-flat-button *ngIf="calculateLateFee() > 0 && bookForm!.value.status != 'Returned' "
+        class="!bg-green-500 !text-white" (click)="show()">Pay Late Fee &
+        Return Book</button>
+    <button mat-flat-button *ngIf="calculateLateFee() == 0 && bookForm!.value.status != 'Returned'"
+        class="!bg-green-500 !text-white" (click)="return()">Return
+        Book</button>
+    <button mat-flat-button (click)="dialogRef.close()" class="!bg-red-500 !text-white">Close</button>
+
+</mat-dialog-actions>

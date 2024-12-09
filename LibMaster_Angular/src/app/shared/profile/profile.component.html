@@ -1,0 +1,57 @@
+<div class="user-form-container m-5 flex flex-col gap-5 overflow-auto">
+
+    <!-- User Form Card -->
+    <mat-card class="user-form-card bg-white m-5 p-5 shadow-lg rounded-lg overflow-auto">
+        <h2 class="text-center mb-5 text-lg font-bold">Profile</h2>
+        <form [formGroup]="userForm" class="flex flex-col gap-5 w-full max-w-md mx-auto">
+
+            <!-- Username Field -->
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="userName" placeholder="Enter your username" />
+                <mat-error *ngIf="userForm.get('userName')?.hasError('required')">
+                    Username is required
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Email Field -->
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" type="email" placeholder="Enter your email" />
+                <mat-error *ngIf="userForm.get('email')?.hasError('required')">
+                    Email is required
+                </mat-error>
+                <mat-error *ngIf="userForm.get('email')?.hasError('email')">
+                    Please enter a valid email
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Role Dropdown -->
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Role</mat-label>
+                <mat-select formControlName="role">
+                    <mat-option value="admin">Admin</mat-option>
+                    <mat-option value="guest">Guest</mat-option>
+                    <mat-option value="member">Member</mat-option>
+                    <mat-option value="librarian">Librarian</mat-option>
+                </mat-select>
+                <mat-error *ngIf="userForm.get('role')?.hasError('required')">
+                    Role is required
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Active Checkbox -->
+            <mat-checkbox formControlName="isActive" class="w-full">
+                Active
+            </mat-checkbox>
+
+            <!-- Form Actions -->
+            <div class="flex justify-center mt-4">
+                <button mat-raised-button color="primary" [disabled]="userForm.invalid" (click)="save()">
+                    Save
+                </button>
+            </div>
+        </form>
+    </mat-card>
+
+</div>

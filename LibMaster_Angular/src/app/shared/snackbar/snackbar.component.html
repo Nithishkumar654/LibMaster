@@ -1,0 +1,9 @@
+<div class="flex" [ngClass]="data.color">
+    <span matSnackBarLabel>
+        {{data.message}}
+    </span>
+    <span matSnackBarActions>
+        <button matSnackBarAction mat-icon-button
+            (click)="snackBarRef.dismissWithAction()"><mat-icon>close</mat-icon></button>
+    </span>
+</div>

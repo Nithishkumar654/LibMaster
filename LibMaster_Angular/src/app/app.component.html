@@ -1,0 +1,79 @@
+<mat-drawer-container class="example-container h-full">
+    <mat-drawer #drawer mode="side" [(opened)]="show" class="!bg-blue-200 w-64">
+        <div class="p-4 flex flex-col h-full">
+            <button mat-icon-button class="hover:bg-red-500" (click)="handleShow()">
+                <mat-icon class="m-auto">close</mat-icon>
+            </button>
+            <h2 class="text-lg font-bold mt-2">Welcome to LibMaster</h2>
+            <ul class="space-y-3 mt-4">
+                <li>
+                    <a href="" routerLink="/"
+                        class="text-black block px-2 py-2 rounded hover:bg-white hover:text-black text-center">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="" routerLink="/books"
+                        class="text-black block px-2 py-2 rounded hover:bg-white hover:text-black text-center">
+                        All Books
+                    </a>
+                </li>
+                <li *ngIf="member">
+                    <a href="" routerLink="/borrowed"
+                        class="text-black block px-2 py-2 rounded hover:bg-white hover:text-black text-center">
+                        Borrowed Books
+                    </a>
+                </li>
+                <li *ngIf="member">
+                    <a href="" routerLink="/reserved"
+                        class="text-black block px-2 py-2 rounded hover:bg-white hover:text-black text-center">
+                        Reserved Books
+                    </a>
+                </li>
+
+                <li *ngIf="member">
+                    <a href="" routerLink="/history"
+                        class="text-black block px-2 py-2 rounded hover:bg-white hover:text-black text-center">
+                        Transaction History
+                    </a>
+                </li>
+
+                <li *ngIf="member || guest" class="flex justify-center">
+                    <button mat-button class="!bg-green-500 !text-white" (click)="profile()">Profile</button>
+                </li>
+                <li class="flex justify-center md:hidden" *ngIf="!loggedIn">
+                    <button mat-button class="!bg-green-500 !text-white" (click)="goToRegister()">Register</button>
+                </li>
+                <li class="flex justify-center md:hidden" *ngIf="!loggedIn">
+                    <button mat-button class="!bg-green-500 !text-white" (click)="goToLogin()">Login</button>
+                </li>
+
+                <li *ngIf="admin" class="flex justify-center">
+                    <button mat-flat-button class="!bg-green-500 !text-white" (click)="goToRequests()">
+                        View Requests
+                    </button>
+                </li>
+                <li *ngIf="librarian" class="flex justify-center md:hidden">
+                    <button *ngIf="librarian" mat-flat-button class="!bg-green-500 !text-white"
+                        (click)="manage()">Manage
+                        Books</button>
+                </li>
+                <li class="flex justify-center md:hidden" *ngIf="loggedIn">
+                    <button mat-button class="!bg-red-500 !text-white" (click)="logout()">LogOut</button>
+                </li>
+
+            </ul>
+            <!-- Spacer -->
+            <div class="flex-grow"></div>
+            <!-- Footer -->
+            <p class="text-sm text-gray-500 text-center">© 2024 Library System</p>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content class="h-full">
+        <div class="h-full flex flex-col bg-white">
+            <app-navigationbar [show]="show" (handleShow)="handleShow()" />
+            <router-outlet class="" />
+            <app-footer class="mt-auto" />
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

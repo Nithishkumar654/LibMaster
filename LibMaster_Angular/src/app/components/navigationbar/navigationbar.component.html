@@ -1,0 +1,20 @@
+<mat-toolbar class="!bg-blue-200 flex overflow-auto">
+
+    <button *ngIf="!show" type="button" mat-mini-fab class="mx-3 !bg-blue-200" (click)="handleShow.emit()">
+        <mat-icon class="text-black">menu</mat-icon>
+    </button>
+    <span><img src="../../../assets/images/logo.jpg" alt="" class="rounded-xl m-3 h-16 w-16 bg-black"></span>
+    <h1 class="text-black">LibMaster</h1>
+    <div class="ms-auto space-x-3 hidden md:block" *ngIf="!loggedIn">
+        <button mat-button class="!bg-green-500 !text-white" (click)="goToRegister()">Register</button>
+        <button mat-button class="!bg-green-500 !text-white" (click)="goToLogin()">Login</button>
+    </div>
+    <div class="ms-auto space-x-3 hidden md:block" *ngIf="loggedIn">
+        <button *ngIf="librarian" mat-flat-button class="!bg-green-500 !text-white" (click)="manage()">Manage
+            Books</button>
+        <button *ngIf="guest || member" mat-flat-button class="!bg-green-500 !text-white" (click)="upgrade()">✨Upgrade
+            to
+            Premium✨</button>
+        <button mat-button class="!bg-red-500 !text-white" (click)="logout()">LogOut</button>
+    </div>
+</mat-toolbar>

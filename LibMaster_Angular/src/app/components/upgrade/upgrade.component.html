@@ -1,0 +1,142 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <mat-card class="w-full shadow-xl rounded-lg m-5 p-5">
+        <h2 class="!text-3xl font-bold text-blue-600 text-center">✨Upgrade To Premium✨</h2>
+        <p class="text-sm text-gray-500 text-center">Upgrade to Member</p>
+        <div class="flex flex-wrap p-4 items-center justify-center">
+            <img src="../../../assets/images/logo.jpg" alt="" class="w-1/2 md:w-1/4 h-1/2 self-center">
+            <div class="w-full md:w-3/4">
+                <mat-stepper #stepper>
+                    <!-- Step 1: What You Gain -->
+                    <mat-step [stepControl]="paymentForm">
+                        <form [formGroup]="paymentForm" class="flex flex-col justify-center items-center">
+                            <ng-template matStepLabel>What you Gain..!!</ng-template>
+                            <mat-accordion class="w-full mt-4">
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title> Borrowing Privileges </mat-panel-title>
+                                        <mat-panel-description>
+                                            <p class="hidden md:block"> Borrow Books from the Library </p>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <p>Gain access to borrow books directly from the library's extensive collection.</p>
+                                    <p class="font-semibold text-red-500">
+                                        NOTE: Atmost 1 book of each type is allowed to borrow.
+                                    </p>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title> Book Reservation </mat-panel-title>
+                                        <mat-panel-description>
+                                            <p class="hidden md:block"> Reserve Unavailable Books from the Library
+                                            </p>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <p>If your desired book is currently unavailable, reserve it for future borrowing.
+                                    </p>
+                                    <p class="font-semibold text-green-500">
+                                        Get notified as soon as it's ready for pickup.
+                                    </p>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title> Priority Access </mat-panel-title>
+                                        <mat-panel-description>
+                                            <p class="hidden md:block"> Get Notified for new arrivals </p>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <p>Enjoy priority over regular members for new arrivals and high-demand books.</p>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <button mat-flat-button matStepperNext color="primary" class="m-auto !text-white mt-5">
+                                Next
+                            </button>
+                        </form>
+                    </mat-step>
+
+                    <!-- Step 2: Make Payment -->
+                    <mat-step [stepControl]="paymentForm" errorMessage="All fields are required.">
+                        <ng-template matStepLabel>Make Payment</ng-template>
+                        <form [formGroup]="paymentForm" (ngSubmit)="submitPayment()" class="space-y-5 mt-3">
+                            <!-- Membership Type -->
+                            <mat-form-field class="w-full">
+                                <mat-label>Membership Type</mat-label>
+                                <mat-select formControlName="membershipType" required>
+                                    <mat-option value="monthly">Monthly - {{1000 | currency: 'INR'}}</mat-option>
+                                    <mat-option value="yearly">Yearly - {{10000 | currency: 'INR'}} </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="paymentForm.get('membershipType')?.hasError('required')">Membership
+                                    type is required</mat-error>
+                            </mat-form-field>
+
+                            <!-- Card Holder Name -->
+                            <mat-form-field class="w-full">
+                                <mat-label>Card Holder Name</mat-label>
+                                <input matInput formControlName="cardHolderName" placeholder="Enter your name" />
+                                <mat-error *ngIf="paymentForm.get('cardHolderName')?.hasError('required')">Card holder
+                                    name is required</mat-error>
+                                <mat-error *ngIf="paymentForm.get('cardHolderName')?.hasError('pattern')">Invalid name
+                                    format</mat-error>
+                            </mat-form-field>
+
+                            <!-- Card Number -->
+                            <mat-form-field class="w-full">
+                                <mat-label>Card Number</mat-label>
+                                <input matInput formControlName="cardNumber" placeholder="1234-5678-9101-1121" />
+                                <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('required')">Card number is
+                                    required</mat-error>
+                                <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('pattern')">Invalid card
+                                    number format</mat-error>
+                            </mat-form-field>
+
+                            <div class="md:flex space-x-2 space-y-2">
+                                <!-- Expiry Date (Month-Year Picker) -->
+                                <mat-form-field class="w-full md:w-1/2">
+                                    <mat-label>Month and Year</mat-label>
+                                    <input matInput [matDatepicker]="dp" formControlName="expiryDate">
+                                    <mat-hint>MM/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp startView="multi-year"
+                                        (monthSelected)="setMonthAndYear($event, dp)" panelClass="example-month-picker">
+                                    </mat-datepicker>
+
+                                    <mat-error *ngIf="paymentForm.get('expiryDate')?.hasError('expiryDateInvalid')">
+                                        Expiry date must be in the future
+                                    </mat-error>
+                                    <mat-error *ngIf="paymentForm.get('expiryDate')?.hasError('required')">
+                                        Expiry date is required
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <!-- CVV -->
+                                <mat-form-field class="w-full md:w-1/2">
+                                    <mat-label>CVV</mat-label>
+                                    <input matInput formControlName="cvv" type="password" placeholder="123" />
+                                    <mat-error *ngIf="paymentForm.get('cvv')?.hasError('required')">CVV is
+                                        required</mat-error>
+                                    <mat-error *ngIf="paymentForm.get('cvv')?.hasError('pattern')">Invalid
+                                        CVV</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <!-- Amount -->
+                            <mat-form-field class="w-full">
+                                <mat-label>Amount (₹)</mat-label>
+                                <input matInput formControlName="amount" type="number"
+                                    placeholder="Enter amount in rupees" />
+                                <mat-error *ngIf="paymentForm.get('amount')?.hasError('required')">Amount is
+                                    required</mat-error>
+                                <mat-error *ngIf="paymentForm.get('amount')?.hasError('pattern')">Invalid
+                                    amount</mat-error>
+                            </mat-form-field>
+
+                            <!-- Submit Button -->
+                            <div class="flex justify-center">
+                                <button mat-raised-button color="primary" class="!py-2 !px-5"
+                                    [disabled]="!paymentForm.valid">Pay Now</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                </mat-stepper>
+            </div>
+        </div>
+    </mat-card>
+</div>
